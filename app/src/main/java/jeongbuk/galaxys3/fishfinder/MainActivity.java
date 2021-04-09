@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
        
+
         join = findViewById(R.id.btn_join);
         login = findViewById(R.id.btn_login);
         id = findViewById(R.id.edit_id);
