@@ -1,135 +1,101 @@
 package jeongbuk.galaxys3.fishfinder;
 
-import android.app.ProgressDialog;
-import android.graphics.Paint;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 
-        public class Join_Activity extends AppCompatActivity {
-            private static String ip_addr = "192.168.79.77";
-            private static String tag = "php test!";
+import java.util.HashMap;
+import java.util.Map;
 
-            private EditText nickname;
-            private EditText id;
-            private EditText password;
+
+public class Join_Activity extends AppCompatActivity {
+            EditText nickname;
+            EditText id;
+            EditText password;
 
             @Override
             protected void onCreate(@Nullable Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_join);
+                //progressBar = (ProgressBar) findViewById(R.id.progressBar);
+                nickname = (EditText) findViewById(R.id.edit_nickname);
+                id = (EditText) findViewById(R.id.edit_id);
+                password = (EditText) findViewById(R.id.edit_pw);
 
-                nickname = findViewById(R.id.edit_nickname);
-                id = findViewById(R.id.edit_id);
-                password = findViewById(R.id.edit_pw);
-
-                Button register = findViewById(R.id.btn_register);
-                register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String Alias = nickname.getText().toString();
-                String ID = id.getText().toString();
-                String PW = password.getText().toString();
-
-                InsertData task = new InsertData();
-                task.execute("http://" + ip_addr + "/join.php", Alias,ID,PW);
-
+                findViewById(R.id.btn_register).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        registerUser();
+                    }
+                });
 
             }
-        });
-    }
 
+            private void registerUser() {
+                final String Alias = nickname.getText().toString().trim();
+                final String PW = password.getText().toString().trim();
+                final String ID = id.getText().toString().trim();
 
-
-
-    class InsertData extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
-
-        protected void onPreExecute(){
-            super.onPreExecute();
-            progressDialog = ProgressDialog.show(Join_Activity.this, "pls wait",null,true,true);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            progressDialog.dismiss();
-            Log.d(tag, "POST response  - " + result);
-        }
-
-
-
-        @Override
-        protected String doInBackground(String... params) {
-            String Alias =(String)params[1];
-            String ID =(String)params[2];
-            String PW =(String)params[3];
-
-            String server_url = (String)params[0];
-            String post_parameters = "Nickname="+ Alias + "&ID=" + ID + "&PW" + PW;
-            try {
-
-                URL url = new URL(server_url);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-
-
-                httpURLConnection.setReadTimeout(5000);
-                httpURLConnection.setConnectTimeout(5000);
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.connect();
-
-
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                outputStream.write(post_parameters.getBytes("UTF-8"));
-                outputStream.flush();
-                outputStream.close();
-
-
-                int responseStatusCode = httpURLConnection.getResponseCode();
-                Log.d(tag, "POST response code - " + responseStatusCode);
-
-                InputStream inputStream;
-                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
-                    inputStream = httpURLConnection.getInputStream();
+                if (TextUtils.isEmpty(Alias)) {
+                    nickname.setError("Please enter Nickname");
+                    nickname.requestFocus();
+                    return;
                 }
-                else{
-                    inputStream = httpURLConnection.getErrorStream();
+                if (TextUtils.isEmpty(ID)) {
+                    id.setError("Please enter ID");
+                    id.requestFocus();
+                    return;
+                }
+                if (TextUtils.isEmpty(PW)) {
+                    password.setError("Please enter Password");
+                    password.requestFocus();
+                    return;
                 }
 
+                String url = "http://58.236.108.52/register.php";
+                StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.equals("Successfully Registered")) {
+                            Toast.makeText(Join_Activity.this, response, Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(Join_Activity.this, MainActivity.class));
+                            finish();
+                        } else {
+                            Toast.makeText(Join_Activity.this, response, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Join_Activity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }){
+                    protected Map<String, String> getParams() throws AuthFailureError{
+                        HashMap<String,String> param = new HashMap<>();
+                        param.put("nickname", Alias);
+                        param.put("id", ID);
+                        param.put("password", PW);
 
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                        return param;
+                    }
+                };
+                request.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                MySingleton.getmInstance(Join_Activity.this).addToRequestQueue(request);
 
-                StringBuilder sb = new StringBuilder();
-                String line = null;
-
-                while((line = bufferedReader.readLine()) != null){
-                    sb.append(line);
-                }
-
-                bufferedReader.close();
-                return sb.toString();
-
-
-            } catch (Exception e) {
-                Log.d(tag, "InsertData: Error ", e);
-                return new String("Error: " + e.getMessage());
             }
-        }
-    }
 }
