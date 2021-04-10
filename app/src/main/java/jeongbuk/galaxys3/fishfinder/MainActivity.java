@@ -37,7 +37,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         //로그인 버튼 이벤트
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
 
 
     }

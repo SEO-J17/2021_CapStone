@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -42,9 +41,10 @@ public class Join_Activity extends AppCompatActivity {
                         registerUser();
                     }
                 });
-
             }
-
+            
+            
+            //회원가입 실행 함수
             private void registerUser() {
                 final String Alias = nickname.getText().toString().trim();
                 final String PW = password.getText().toString().trim();
@@ -66,11 +66,12 @@ public class Join_Activity extends AppCompatActivity {
                     return;
                 }
 
+                //외부 ip주소를 통한 접속. 외부에서 접속 가능.
                 String url = "http://58.236.108.52/register.php";
                 StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if (response.equals("Successfully Registered")) {
+                        if (response.equals("회원가입에 성공했습니다.")) {
                             Toast.makeText(Join_Activity.this, response, Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(Join_Activity.this, MainActivity.class));
                             finish();
@@ -93,6 +94,8 @@ public class Join_Activity extends AppCompatActivity {
                         return param;
                     }
                 };
+
+                //기본정책 사용, 30초 넘으면 타임아웃.
                 request.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 MySingleton.getmInstance(Join_Activity.this).addToRequestQueue(request);
