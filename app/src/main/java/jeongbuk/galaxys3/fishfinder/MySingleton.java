@@ -23,9 +23,9 @@ public class MySingleton {
 
     public RequestQueue getmRequestQueue() {
         if (mRequestQueue == null) {
-            Cache cache = new DiskBasedCache(mCtx.getCacheDir(), 1024*1024);
-            Network network = new BasicNetwork(new HurlStack());
-            mRequestQueue = new RequestQueue(cache, network);
+            Cache cache = new DiskBasedCache(mCtx.getCacheDir(), 1024*1024);     //1MB CAP
+            Network network = new BasicNetwork(new HurlStack());    //Set up the network to use HttpURLConnection as the HTTP client.
+            mRequestQueue = new RequestQueue(cache, network);   //Instantiate the RequestQueue with the cache and network. Start the queue.
             mRequestQueue = Volley.newRequestQueue(mCtx.getApplicationContext());
         }
         return mRequestQueue;
@@ -35,7 +35,6 @@ public class MySingleton {
         if (mInstance == null) {
             mInstance = new MySingleton(context);
         }
-
         return mInstance;
     }
 

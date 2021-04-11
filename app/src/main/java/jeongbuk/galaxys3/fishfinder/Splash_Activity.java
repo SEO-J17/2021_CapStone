@@ -11,7 +11,7 @@ public class Splash_Activity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            Thread.sleep(1400);     //4000의 시간. 1000이 1초임. 4초있다가 main을 실행시켜라 구문.
+            Thread.sleep(1400);     //1000이 1초임.
         }catch (InterruptedException e){
             e.printStackTrace();
         }

@@ -66,39 +66,40 @@ public class Join_Activity extends AppCompatActivity {
                     return;
                 }
 
-                //외부 ip주소를 통한 접속. 외부에서 접속 가능.
-                String url = "http://58.236.108.52/register.php";
-                StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        if (response.equals("회원가입에 성공했습니다.")) {
-                            Toast.makeText(Join_Activity.this, response, Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Join_Activity.this, MainActivity.class));
-                            finish();
-                        } else {
-                            Toast.makeText(Join_Activity.this, response, Toast.LENGTH_SHORT).show();
+                    //외부 ip주소를 통한 접속. 외부에서 접속 가능.
+                    String url = "http://58.236.108.52/register.php";
+                    StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            if (response.equals("Successfully Registered")) {
+                                Toast.makeText(Join_Activity.this, "회원가입에 성공했습니다!", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(Join_Activity.this, MainActivity.class));
+                                finish();
+                            } else {
+                                Toast.makeText(Join_Activity.this, response, Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Join_Activity.this, error.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                }){
-                    protected Map<String, String> getParams() throws AuthFailureError{
-                        HashMap<String,String> param = new HashMap<>();
-                        param.put("nickname", Alias);
-                        param.put("id", ID);
-                        param.put("password", PW);
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(Join_Activity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }) {
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            HashMap<String, String> param = new HashMap<>();
+                            param.put("nickname", Alias);
+                            param.put("id", ID);
+                            param.put("password", PW);
 
-                        return param;
-                    }
-                };
+                            return param;
+                        }
+                    };
 
-                //기본정책 사용, 30초 넘으면 타임아웃.
-                request.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                MySingleton.getmInstance(Join_Activity.this).addToRequestQueue(request);
+                    //기본정책 사용, 30초 넘으면 재시도
+                    request.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                    MySingleton.getmInstance(Join_Activity.this).addToRequestQueue(request);    // // Add a request
+
 
             }
 }
