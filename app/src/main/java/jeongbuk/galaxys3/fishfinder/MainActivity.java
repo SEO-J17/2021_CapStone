@@ -40,7 +40,9 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //패스워드와 아이디를 파라미터로 받아 클래스로 전송하기.
+                Intent intent = new Intent(MainActivity.this, Login_Activity.class);
+                startActivity(intent);
             }
         });
 
