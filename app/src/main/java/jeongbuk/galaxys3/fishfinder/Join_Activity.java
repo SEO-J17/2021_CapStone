@@ -22,18 +22,19 @@ import java.util.Map;
 
 
 public class Join_Activity extends AppCompatActivity {
-            EditText nickname;
-            EditText id;
-            EditText password;
+            private EditText nickname;
+            private EditText id;
+            private EditText password;
+            private EditText chk_password;
 
             @Override
             protected void onCreate(@Nullable Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_join);
-                //progressBar = (ProgressBar) findViewById(R.id.progressBar);
                 nickname = (EditText) findViewById(R.id.edit_nickname);
                 id = (EditText) findViewById(R.id.edit_id);
                 password = (EditText) findViewById(R.id.edit_pw);
+                chk_password = (EditText) findViewById(R.id.chk_pw);
 
                 findViewById(R.id.btn_register).setOnClickListener(new View.OnClickListener() {
                     @Override
