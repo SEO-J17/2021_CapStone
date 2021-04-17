@@ -27,6 +27,8 @@
 
         <activity android:name=".MainActivity"/>
         <activity android:name=".Join_Activity"></activity>
+        <activity android:name=".Choice_Activity"></activity>
+
 
     </application>
 </manifest>
