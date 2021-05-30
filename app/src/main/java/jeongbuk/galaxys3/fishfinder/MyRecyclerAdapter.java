@@ -17,9 +17,9 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
     public interface MyRecyclerViewClickListener {
         void onItemClicked(int position);
         void onItemLongClicked(int position);
-        void onTitleClicked(int position);
-        void onContentClicked(int position);
-        void onImageViewClicked(int position);
+//        void onTitleClicked(int position);
+//        void onContentClicked(int position);
+//        void onImageViewClicked(int position);
     }
     private MyRecyclerViewClickListener mListener;
 
@@ -55,24 +55,24 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
                     mListener.onItemClicked(pos);
                 }
             });
-            holder.title.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mListener.onTitleClicked(pos);
-                }
-            });
-            holder.content.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mListener.onContentClicked(pos);
-                }
-            });
-            holder.imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mListener.onImageViewClicked(pos);
-                }
-            });
+//            holder.title.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    mListener.onTitleClicked(pos);
+//                }
+//            });
+//            holder.content.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    mListener.onContentClicked(pos);
+//                }
+//            });
+//            holder.imageView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    mListener.onImageViewClicked(pos);
+//                }
+//            });
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
