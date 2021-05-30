@@ -2,9 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="jeongbuk.galaxys3.fishfinder">\
 
-<!--   인터넷 퍼미션-->
+    <!--   인터넷 퍼미션-->
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <!--    카메라 퍼미션-->
+    <uses-permission android:name= "android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.front" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.front.autofocus" android:required="false"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
@@ -28,6 +35,9 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".Join_Activity"></activity>
         <activity android:name=".Choice_Activity"></activity>
+        <activity android:name=".Board_Activity"></activity>
+        <activity android:name=".Camera_Activity"
+            android:screenOrientation="landscape"></activity>
 
 
     </application>

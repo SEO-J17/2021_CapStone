@@ -10,4 +10,5 @@
     <string name="view_board"> 게시판 </string>
     <string name="chk_loginstate"> 자동 로그인 </string>
     <string name="prefLoginstate"> loginstate </string>
+
 </resources>

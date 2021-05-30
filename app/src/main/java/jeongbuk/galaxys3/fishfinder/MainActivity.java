@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
                     editor.apply();
                     Intent intent = new Intent(MainActivity.this, Choice_Activity.class);
                     startActivity(intent);
+                    finish();
                 }else {
                     progressDialog.dismiss();
                     Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();

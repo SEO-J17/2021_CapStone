@@ -5,98 +5,98 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/main_color"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.Toolbar>
+  <androidx.appcompat.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/main_color"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/join_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fish Finder"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+  <TextView
+      android:id="@+id/join_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Fish Finder"
+      android:textColor="@color/white"
+      android:textSize="30sp"
+      app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+      app:layout_constraintEnd_toEndOf="@+id/toolbar"
+      app:layout_constraintHorizontal_bias="0.498"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
 
-    <EditText
-        android:id="@+id/edit_nickname"
-        android:layout_width="242dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="168dp"
-        android:ems="10"
-        android:hint="@string/hint_nickname"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+  <EditText
+      android:id="@+id/edit_nickname"
+      android:layout_width="242dp"
+      android:layout_height="41dp"
+      android:layout_marginTop="168dp"
+      android:ems="10"
+      android:hint="@string/hint_nickname"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.497"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/edit_id"
-        android:layout_width="242dp"
-        android:layout_height="41dp"
-        android:ems="10"
-        android:hint="@string/hint_id"
-        app:layout_constraintBottom_toTopOf="@+id/edit_pw"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_nickname"
-        app:layout_constraintVertical_bias="0.52" />
+  <EditText
+      android:id="@+id/edit_id"
+      android:layout_width="242dp"
+      android:layout_height="41dp"
+      android:ems="10"
+      android:hint="@string/hint_id"
+      app:layout_constraintBottom_toTopOf="@+id/edit_pw"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.497"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/edit_nickname"
+      app:layout_constraintVertical_bias="0.52" />
 
-    <EditText
-        android:id="@+id/edit_pw"
-        android:layout_width="242dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="332dp"
-        android:ems="10"
-        android:hint="@string/hint_password"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+  <EditText
+      android:id="@+id/edit_pw"
+      android:layout_width="242dp"
+      android:layout_height="41dp"
+      android:layout_marginTop="332dp"
+      android:ems="10"
+      android:hint="@string/hint_password"
+      android:inputType="textPassword"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.497"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/chk_pw"
-        android:layout_width="242dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="40dp"
-        android:ems="10"
-        android:hint="@string/hint_chk_password"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_pw"
-        app:layout_constraintVertical_bias="0.018" />
+  <EditText
+      android:id="@+id/chk_pw"
+      android:layout_width="242dp"
+      android:layout_height="41dp"
+      android:layout_marginTop="40dp"
+      android:ems="10"
+      android:hint="@string/hint_chk_password"
+      android:inputType="textPassword"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.497"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/edit_pw"
+      app:layout_constraintVertical_bias="0.018" />
 
-    <Button
-        android:id="@+id/btn_register"
-        android:layout_width="242dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="36dp"
-        android:backgroundTint="@color/main_color"
-        android:text="확인"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chk_pw"
-        app:layout_constraintVertical_bias="0.106"
-         />
+  <Button
+      android:id="@+id/btn_register"
+      android:layout_width="242dp"
+      android:layout_height="50dp"
+      android:layout_marginTop="36dp"
+      android:backgroundTint="@color/main_color"
+      android:text="확인"
+      android:textColor="@color/white"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.497"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/chk_pw"
+      app:layout_constraintVertical_bias="0.106"
+      />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
