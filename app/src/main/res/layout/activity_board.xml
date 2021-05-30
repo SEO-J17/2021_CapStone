@@ -29,7 +29,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <!--       향후 플로팅 버튼 이미지 추가// android:src="@drawable/ic_near_me"-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recylerview"
@@ -45,6 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
+        android:src="@drawable/pencil"
         app:backgroundTint="@color/main_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

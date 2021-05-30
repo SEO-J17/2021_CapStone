@@ -1,5 +1,6 @@
 package jeongbuk.galaxys3.fishfinder;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -8,9 +9,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.net.Inet4Address;
 import java.util.ArrayList;
 
 public class Board_Activity extends AppCompatActivity implements MyRecyclerAdapter.MyRecyclerViewClickListener {
+    FloatingActionButton floatingActionButton ;
     ArrayList<ItemData> dataList = new ArrayList<>();
     MyRecyclerAdapter adapter = new MyRecyclerAdapter(dataList);
     static int i=0;
@@ -23,15 +28,27 @@ public class Board_Activity extends AppCompatActivity implements MyRecyclerAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
 
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.btn_floating);
+
         RecyclerView recyclerView = findViewById(R.id.recylerview);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
         adapter.setOnClickListener(this);
+
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Board_Activity.this, Write_Activity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     //리스트 클릭 이벤트
+
     @Override
     public void onItemClicked(int position) {
         Toast.makeText(getApplicationContext(), ""+(position+1), Toast.LENGTH_SHORT).show();
@@ -48,20 +65,20 @@ public class Board_Activity extends AppCompatActivity implements MyRecyclerAdapt
 //        Toast.makeText(getApplicationContext(),"리스트 삭제", Toast.LENGTH_SHORT).show();
 //    }
 
-    @Override
-    public void onTitleClicked(int position) {
-        Toast.makeText(getApplicationContext(),dataList.get(position).getTitle(), Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onContentClicked(int position) {
-        Toast.makeText(getApplicationContext(),dataList.get(position).getContent(), Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onImageViewClicked(int position) {
-        Toast.makeText(getApplicationContext(), "Image", Toast.LENGTH_SHORT).show();
-    }
+//    @Override
+//    public void onTitleClicked(int position) {
+//        Toast.makeText(getApplicationContext(),dataList.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    public void onContentClicked(int position) {
+//        Toast.makeText(getApplicationContext(),dataList.get(position).getContent(), Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    public void onImageViewClicked(int position) {
+//        Toast.makeText(getApplicationContext(), "Image", Toast.LENGTH_SHORT).show();
+//    }
 
 //    // 다이얼로그를 사용해 list_insert.xml과 연결
 //    public void onMenuInsert(View view) {
