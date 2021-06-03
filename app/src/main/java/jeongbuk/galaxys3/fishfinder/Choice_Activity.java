@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -23,8 +24,6 @@ public class Choice_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choice);
         final SharedPreferences sharedPreferences = getSharedPreferences("UserState",0);
-        final CharSequence[] oItems = {"갤러리에서 선택", "카메라로 인식"};
-        AlertDialog.Builder oDialog = new AlertDialog.Builder(Choice_Activity.this);
 
         logout = (ImageButton) findViewById(R.id.img_btn_logout);
         board  = (ImageButton) findViewById(R.id.img_btn_board);
@@ -57,6 +56,23 @@ public class Choice_Activity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if( keyCode == KeyEvent.KEYCODE_BACK ) {
+            new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Quit").setMessage("종료하시겠습니까?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick( DialogInterface dialog, int which) {
+                    moveTaskToBack(true); // 본Activity finish후 다른 Activity가 뜨는 걸 방지.
+                    finish();
+                    //application 프로세스를 강제 종료
+                    android.os.Process.killProcess(android.os.Process.myPid() );
+                }
+            }).setNegativeButton( "No", null ).show();
+
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
