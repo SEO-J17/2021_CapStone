@@ -9,20 +9,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.Inet4Address;
 import java.util.ArrayList;
 
-public class Board_Activity extends AppCompatActivity implements MyRecyclerAdapter.MyRecyclerViewClickListener {
+public class Board_Activity extends AppCompatActivity {
     FloatingActionButton floatingActionButton ;
     ArrayList<ItemData> dataList = new ArrayList<>();
-    MyRecyclerAdapter adapter = new MyRecyclerAdapter(dataList);
-    static int i=0;
-//    int[] cat = {R.drawable.pic001, R.drawable.pic002, R.drawable.pic003,
-//            R.drawable.pic004, R.drawable.pic005, R.drawable.pic006,
-//            R.drawable.pic007, R.drawable.pic008, R.drawable.pic009,
-//            R.drawable.pic010};
+    MyRecyclerAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,12 +36,12 @@ public class Board_Activity extends AppCompatActivity implements MyRecyclerAdapt
         floatingActionButton = (FloatingActionButton) findViewById(R.id.btn_floating);
 
         RecyclerView recyclerView = findViewById(R.id.recylerview);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+        adapter = new MyRecyclerAdapter(this, dataList);
         recyclerView.setAdapter(adapter);
+        LinearLayoutManager layoutManager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        recyclerView.setLayoutManager(layoutManager);
 
-        adapter.setOnClickListener(this);
-
+        loadDB();
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,17 +52,45 @@ public class Board_Activity extends AppCompatActivity implements MyRecyclerAdapt
         });
     }
 
+    private void loadDB() {
+        String url ="http://58.236.108.52/board_load.php";
+        JsonArrayRequest jsonArrayRequest= new JsonArrayRequest(Request.Method.POST, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Toast.makeText(Board_Activity.this, response.toString(), Toast.LENGTH_SHORT).show();
+                dataList.clear();
+                adapter.notifyDataSetChanged();
+                try {
+                    for(int i=0;i<response.length();i++){
+                        JSONObject jsonObject= response.getJSONObject(i);
+
+                        int number = Integer.parseInt(jsonObject.getString("content_serial"));
+                        String name = jsonObject.getString("writer");
+                        String date = jsonObject.getString("post_time");
+                        String title = jsonObject.getString("title");
+                        String content = jsonObject.getString("conetent");
+                        String imgpath = jsonObject.getString("img_path");
+                        //이미지 경로의 경우 서버 IP가 제외된 주소이므로(uploads/xxxx.jpg) 바로 사용 불가.
+                        imgpath = "http://58.236.108.52/"+imgpath;
+
+                        dataList.add(0, new ItemData(number, name, imgpath, date, title , content));
+                        adapter.notifyItemInserted(0);
+                    }
+                } catch (JSONException e) {e.printStackTrace();}
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Board_Activity.this, "ERROR", Toast.LENGTH_SHORT).show();
+            }
+        });
+        RequestQueue requestQueue= Volley.newRequestQueue(this);
+        requestQueue.add(jsonArrayRequest);
+
+    }
+
     //리스트 클릭 이벤트
 
-    @Override
-    public void onItemClicked(int position) {
-        Toast.makeText(getApplicationContext(), ""+(position+1), Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onItemLongClicked(int position) {
-
-    }
 
 //    @Override
 //    public void onItemLongClicked(int position) {
