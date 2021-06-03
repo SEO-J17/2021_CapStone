@@ -1,10 +1,8 @@
 package jeongbuk.galaxys3.fishfinder;
 
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,19 +15,17 @@ import android.widget.Toast;
 
 import androidx.annotation.BinderThread;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.content.CursorLoader;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.SimpleMultiPartRequest;
+import com.android.volley.toolbox.Volley;
 
-import java.io.File;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Write_Activity extends AppCompatActivity {
     private Button content_regsiter;
@@ -38,75 +34,37 @@ public class Write_Activity extends AppCompatActivity {
     private EditText content;
     private EditText title;
     private ImageView imgview;
-
-
+    private String imgpath;
+    private MainActivity author = new MainActivity();
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write);
-
         content_regsiter = (Button)findViewById(R.id.btn_content_regsiter);
         back = (ImageButton)findViewById(R.id.img_btn_back);
         gallery = (ImageButton)findViewById(R.id.img_btn_gallery);
         content = (EditText)findViewById(R.id.edit_content);
         title = (EditText)findViewById(R.id.edit_title);
         imgview = (ImageView)findViewById(R.id.board_view);
-
+        String Writer = "testid";
 
         content_regsiter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String Title = title.getText().toString();
                 String Content = content.getText().toString();
-                RegisterContent(Title, Content);
+                RegisterContent(Title, Content, Writer);
             }
         });
 
         gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
+                Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(intent, 101);
             }
         });
-    }
-
-    private void RegisterContent(final String title, final String content) {
-        final ProgressDialog progressDialog = new ProgressDialog(Write_Activity.this);
-        progressDialog.setCancelable(false);
-        progressDialog.setIndeterminate(false);
-        progressDialog.setTitle("등록중 입니다.");
-        progressDialog.show();
-
-        String url = "http://58.236.108.52/login.php";
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-        public void onResponse(String response) {
-            if (response.equals("Successfully Registered")) {
-                startActivity(new Intent(Write_Activity.this, Board_Activity.class));
-                finish();
-            } else {
-                Toast.makeText(Write_Activity.this, response, Toast.LENGTH_SHORT).show();
-            }
-        }
-    }, new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            Toast.makeText(Write_Activity.this, error.toString(), Toast.LENGTH_SHORT).show();
-        }
-    }) {
-        protected Map<String, String> getParams() throws AuthFailureError {
-            HashMap<String, String> param = new HashMap<>();
-            param.put("title", title);
-            param.put("id", content);
-
-            return param;
-        }
-    };
-
-        request.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                                                      DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        MySingleton.getmInstance(Write_Activity.this).addToRequestQueue(request);    // // Add a request
     }
 
 
@@ -115,19 +73,56 @@ public class Write_Activity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 101) {
             if (resultCode == RESULT_OK) {
+                //사진의 경로 객체 얻어오기
                 Uri fileUri = data.getData();
-                ContentResolver resolver = getContentResolver();
-                try {
-                    InputStream instream = resolver.openInputStream(fileUri);
-                    Bitmap imgBitmap = BitmapFactory.decodeStream(instream);
-                    imgview.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
-                    instream.close();   // 스트림 닫아주기
-                    Toast.makeText(getApplicationContext(), "파일 불러오기 성공", Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "파일 불러오기 실패", Toast.LENGTH_SHORT).show();
+                if(fileUri != null){
+                    imgview.setImageURI(fileUri);
+                    imgpath = getImgPath(fileUri);
+                    new AlertDialog.Builder(this).setMessage(fileUri.toString()+"\n"+imgpath).create().show();
+                }else{
+                    Toast.makeText(getApplicationContext(), "사진을 선택하지 않았습니다!", Toast.LENGTH_SHORT).show();
                 }
             }
         }
     }
 
+    //uri를 절대경로로 바꿔서 알려주는 메소드
+    private String getImgPath(Uri fileUri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        CursorLoader loader = new CursorLoader(this, fileUri, proj, null, null,null);
+        Cursor cursor = loader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String realpath = cursor.getString(column_index);
+        cursor.close();
+        return realpath;
+    }
+
+
+    private void RegisterContent(String title, String content, String writer) {
+        String url = "http://58.236.108.52/board.php";
+        SimpleMultiPartRequest smpr= new SimpleMultiPartRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                new AlertDialog.Builder(Write_Activity.this).setMessage("응답:"+response).create().show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Write_Activity.this, "ERROR", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //요청 객체에 보낼 데이터를 추가
+        smpr.addStringParam("writer", writer);
+        smpr.addStringParam("title", title);
+        smpr.addStringParam("content", content);
+        //이미지 파일 추가
+        smpr.addFile("img_path", imgpath);
+
+        //요청객체를 서버로 보낼 우체통 같은 객체 생성
+        RequestQueue requestQueue= Volley.newRequestQueue(this);
+        requestQueue.add(smpr);
+
+    }
 }
