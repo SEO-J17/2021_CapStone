@@ -100,7 +100,7 @@ public class Write_Activity extends AppCompatActivity {
 
 
     private void RegisterContent(String title, String content, String writer) {
-        String url = "http://58.236.108.52/board.php";
+        String url = "http://211.232.201.35/board.php";
         SimpleMultiPartRequest smpr= new SimpleMultiPartRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

@@ -53,7 +53,7 @@ public class Board_Activity extends AppCompatActivity {
     }
 
     private void loadDB() {
-        String url ="http://58.236.108.52/board_load.php";
+        String url ="http://211.232.201.35/board_load.php";
         JsonArrayRequest jsonArrayRequest= new JsonArrayRequest(Request.Method.POST, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -64,16 +64,15 @@ public class Board_Activity extends AppCompatActivity {
                     for(int i=0;i<response.length();i++){
                         JSONObject jsonObject= response.getJSONObject(i);
 
-                        int number = Integer.parseInt(jsonObject.getString("content_serial"));
                         String name = jsonObject.getString("writer");
                         String date = jsonObject.getString("post_time");
                         String title = jsonObject.getString("title");
                         String content = jsonObject.getString("conetent");
                         String imgpath = jsonObject.getString("img_path");
                         //이미지 경로의 경우 서버 IP가 제외된 주소이므로(uploads/xxxx.jpg) 바로 사용 불가.
-                        imgpath = "http://58.236.108.52/"+imgpath;
+                        imgpath = "http://211.232.201.35/"+imgpath;
 
-                        dataList.add(0, new ItemData(number, name, imgpath, date, title , content));
+                        dataList.add(new ItemData(name, imgpath, date, title , content));
                         adapter.notifyItemInserted(0);
                     }
                 } catch (JSONException e) {e.printStackTrace();}

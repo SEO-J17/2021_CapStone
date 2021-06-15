@@ -66,7 +66,7 @@ public class Join_Activity extends AppCompatActivity {
             return;
         }
 
-        String url = "http://58.236.108.52/register.php";
+        String url = "http://211.232.201.35/register.php";
         SimpleMultiPartRequest smpr= new SimpleMultiPartRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

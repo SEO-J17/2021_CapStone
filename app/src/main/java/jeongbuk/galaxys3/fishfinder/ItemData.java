@@ -1,19 +1,13 @@
 package jeongbuk.galaxys3.fishfinder;
 
 public class ItemData {
-    int number;
     String title;
     String content;
     String name;
     String imgpath;
     String date;
 
-    public ItemData(){
-
-    }
-
-    public ItemData(int number, String name, String imgpath, String date, String title, String content) {
-        this.number = number;
+    public ItemData(String name, String imgpath, String date, String title, String content) {
         this.name  = name;
         this.imgpath = imgpath;
         this.date = date;
@@ -22,7 +16,6 @@ public class ItemData {
     }
 
 
-    public int getNumber() {return number;}
 
     public String getName() { return  name;}
 
@@ -38,9 +31,6 @@ public class ItemData {
         return content;
     }
 
-    public void setNumber(int number){
-        this.number = number;
-    }
 
     public void setName(String name) {
         this.name = name;

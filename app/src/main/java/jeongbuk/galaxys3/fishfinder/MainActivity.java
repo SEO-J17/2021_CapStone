@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         progressDialog.setIndeterminate(false);
         progressDialog.setTitle("로그인중 입니다.");
         progressDialog.show();
-         String url = "http://58.236.108.52/login.php";
+         String url = "http://211.232.201.35/login.php";
           SimpleMultiPartRequest smpr= new SimpleMultiPartRequest(Request.Method.POST, url, new Response.Listener<String>() {
         @Override
             public void onResponse(String response) {
