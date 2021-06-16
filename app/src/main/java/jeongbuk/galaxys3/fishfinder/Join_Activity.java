@@ -49,20 +49,27 @@ public class Join_Activity extends AppCompatActivity {
         Alias = nickname.getText().toString();
         final String PW = password.getText().toString().trim();
         final String ID = id.getText().toString().trim();
+        final String Chk_PW = chk_password.getText().toString().trim();
 
         if (TextUtils.isEmpty(Alias)) {
-            nickname.setError("Please enter Nickname");
+            nickname.setError("닉네임을 입력하세요");
             nickname.requestFocus();
             return;
         }
         if (TextUtils.isEmpty(ID)) {
-            id.setError("Please enter ID");
+            id.setError("아이디를 입력하세요");
             id.requestFocus();
             return;
         }
         if (TextUtils.isEmpty(PW)) {
-            password.setError("Please enter Password");
+            password.setError("패스워드를 입력하세요");
             password.requestFocus();
+            return;
+        }
+        if(!TextUtils.equals(PW, Chk_PW)){
+            chk_password.setError("패스워드가 다릅니다!");
+            chk_password.setText("");
+            chk_password.requestFocus();
             return;
         }
 
@@ -71,7 +78,7 @@ public class Join_Activity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 if (response.equals("Successfully Registered")) {
-                    Toast.makeText(Join_Activity.this, "회원가입에 성공했습니다!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Join_Activity.this, "회원가입을 완료했습니다.", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(Join_Activity.this, MainActivity.class));
                     finish();
                 } else {
@@ -93,37 +100,3 @@ public class Join_Activity extends AppCompatActivity {
         requestQueue.add(smpr);
     }
 }
-
-//        //외부 ip주소를 통한 접속. 외부에서 접속 가능.
-//        String url = "http://58.236.108.52/register.php";
-//        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                if (response.equals("Successfully Registered")) {
-//                    Toast.makeText(Join_Activity.this, "회원가입에 성공했습니다!", Toast.LENGTH_SHORT).show();
-//                    startActivity(new Intent(Join_Activity.this, MainActivity.class));
-//                    finish();
-//                } else {
-//                    Toast.makeText(Join_Activity.this, response, Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(Join_Activity.this, error.toString(), Toast.LENGTH_SHORT).show();
-//            }
-//        }) {
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                HashMap<String, String> param = new HashMap<>();
-//                param.put("nickname", Alias);
-//                param.put("id", ID);
-//                param.put("password", PW);
-//
-//                return param;
-//            }
-//        };
-//
-//        //기본정책 사용, 30초 넘으면 재시도
-//        request.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-//                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//        MySingleton.getmInstance(Join_Activity.this).addToRequestQueue(request);    // // Add a request

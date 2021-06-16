@@ -29,6 +29,21 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+    <ImageButton
+        android:id="@+id/board_img_btn_back"
+        android:layout_width="27dp"
+        android:layout_height="28dp"
+        android:background="@color/main_color"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar"
+        app:layout_constraintHorizontal_bias="0.041"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.571"
+        app:srcCompat="@drawable/back" />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recylerview"
         android:layout_width="match_parent"

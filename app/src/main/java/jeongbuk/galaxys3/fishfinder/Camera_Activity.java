@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -84,6 +85,8 @@ public class Camera_Activity extends AppCompatActivity implements CameraBridgeVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //상태바 없애기
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_camera);
         cameraBridgeViewBase = (JavaCameraView)findViewById(R.id.CameraView);
         cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
@@ -215,7 +218,7 @@ public class Camera_Activity extends AppCompatActivity implements CameraBridgeVi
     protected void onResume() {
         super.onResume();
         if (!OpenCVLoader.initDebug()){
-            Toast.makeText(getApplicationContext(),"There's a problem, yo!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"There's a problem", Toast.LENGTH_SHORT).show();
         }else {
             baseLoaderCallback.onManagerConnected(baseLoaderCallback.SUCCESS);
         }

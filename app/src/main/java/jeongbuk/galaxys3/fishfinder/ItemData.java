@@ -7,6 +7,7 @@ public class ItemData {
     String imgpath;
     String date;
 
+
     public ItemData(String name, String imgpath, String date, String title, String content) {
         this.name  = name;
         this.imgpath = imgpath;
@@ -14,7 +15,6 @@ public class ItemData {
         this.title = title;
         this.content = content;
     }
-
 
 
     public String getName() { return  name;}

@@ -37,6 +37,7 @@
         <activity android:name=".Choice_Activity"></activity>
         <activity android:name=".Board_Activity"></activity>
         <activity android:name=".Write_Activity"></activity>
+        <activity android:name=".BoardView_Activity"></activity>
         <activity android:name=".Camera_Activity"
             android:screenOrientation="landscape"></activity>
 

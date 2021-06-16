@@ -6,6 +6,7 @@
     <string name="hint_chk_password"> 패스워드를 다시 입력하세요 </string>
     <string name="hint_content"> 글 내용을 입력하세요 </string>
     <string name="hint_title"> 제목을 입력하세요 </string>
+    <string name="hint_writer"> 작성자 </string>
     <string name="btn_join"> 회원가입 </string>
     <string name="img_btn_logout"> 로그아웃 </string>
     <string name="view_camera"> 어종 인식 </string>

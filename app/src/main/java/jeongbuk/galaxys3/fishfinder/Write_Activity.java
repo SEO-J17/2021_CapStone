@@ -33,6 +33,7 @@ public class Write_Activity extends AppCompatActivity {
     private ImageButton gallery;
     private EditText content;
     private EditText title;
+    private EditText name;
     private ImageView imgview;
     private String imgpath;
     private MainActivity author = new MainActivity();
@@ -44,8 +45,8 @@ public class Write_Activity extends AppCompatActivity {
         gallery = (ImageButton)findViewById(R.id.img_btn_gallery);
         content = (EditText)findViewById(R.id.edit_content);
         title = (EditText)findViewById(R.id.edit_title);
+        name = (EditText)findViewById(R.id.edit_writer);
         imgview = (ImageView)findViewById(R.id.board_view);
-        String Writer = "testid";
 
         content_regsiter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +54,8 @@ public class Write_Activity extends AppCompatActivity {
 
                 String Title = title.getText().toString();
                 String Content = content.getText().toString();
-                RegisterContent(Title, Content, Writer);
+                String Name = name.getText().toString();
+                RegisterContent(Title, Content, Name);
             }
         });
 
@@ -105,6 +107,7 @@ public class Write_Activity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 new AlertDialog.Builder(Write_Activity.this).setMessage("응답:"+response).create().show();
+                finish();
             }
         }, new Response.ErrorListener() {
             @Override

@@ -28,6 +28,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <EditText
+        android:id="@+id/edit_writer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@null"
+        android:ems="10"
+        android:hint="@string/hint_writer"
+        android:inputType="text"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toTopOf="@+id/edit_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.066" />
+
 
     <EditText
         android:id="@+id/edit_title"
@@ -43,7 +60,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.655" />
+        app:layout_constraintVertical_bias="0.704" />
 
     <EditText
         android:id="@+id/edit_content"
@@ -53,14 +70,14 @@
         android:ems="10"
         android:gravity="top"
         android:hint="@string/hint_content"
-        android:textSize="15sp"
         android:inputType="textImeMultiLine"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.422" />
+        app:layout_constraintVertical_bias="0.498" />
 
     <ImageButton
         android:id="@+id/img_btn_gallery"
@@ -70,10 +87,10 @@
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintHorizontal_bias="0.957"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.771"
+        app:layout_constraintVertical_bias="0.821"
         app:srcCompat="@drawable/gallery2" />
 
     <ImageButton
@@ -112,10 +129,10 @@
         android:layout_height="120dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.086"
+        app:layout_constraintHorizontal_bias="0.085"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_content"
-        app:layout_constraintVertical_bias="0.166"
+        app:layout_constraintVertical_bias="0.413"
         app:srcCompat="@android:drawable/screen_background_light" />
 
 
