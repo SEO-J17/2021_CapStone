@@ -2,7 +2,7 @@
 <resources>
     //스플래쉬 액티비티에 쓰일 테마와 이미지를 매핑 시켜주는 구문이다.
     <style name="SplashTheme" parent="@android:style/Theme.Light.NoTitleBar">
-        <item name="android:windowBackground">@drawable/fish_logo</item>
+        <item name="android:windowBackground">@drawable/intro</item>
     </style>
 
 </resources>

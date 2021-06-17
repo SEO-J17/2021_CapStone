@@ -32,12 +32,22 @@ public class Choice_Activity extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(getResources().getString(R.string.prefLoginstate), "loggedout");
-                editor.apply();
-                Intent intent = new Intent(Choice_Activity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                AlertDialog.Builder builder = new AlertDialog.Builder(Choice_Activity.this);
+                builder.setTitle("알림");
+                builder.setMessage("로그아웃 하시겠습니까?");
+                builder.setNegativeButton("취소", null);
+                builder.setPositiveButton("로그아웃", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString(getResources().getString(R.string.prefLoginstate), "loggedout");
+                        editor.apply();
+                        Intent intent = new Intent(Choice_Activity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+                builder.create().show();
             }
         });
 
