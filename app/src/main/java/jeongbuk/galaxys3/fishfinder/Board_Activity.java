@@ -37,8 +37,8 @@ public class Board_Activity extends AppCompatActivity {
 
         floatingActionButton = (FloatingActionButton) findViewById(R.id.btn_floating);
         btn_back = (ImageButton) findViewById(R.id.board_img_btn_back);
-        RecyclerView recyclerView = findViewById(R.id.recylerview);
 
+        RecyclerView recyclerView = findViewById(R.id.recylerview);
         LinearLayoutManager layoutManager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);

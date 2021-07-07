@@ -51,7 +51,6 @@ public class Write_Activity extends AppCompatActivity {
         content_regsiter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String Title = title.getText().toString();
                 String Content = content.getText().toString();
                 String Name = name.getText().toString();
@@ -122,8 +121,6 @@ public class Write_Activity extends AppCompatActivity {
         smpr.addStringParam("content", content);
         //이미지 파일 추가
         smpr.addFile("img_path", imgpath);
-
-        //요청객체를 서버로 보낼 우체통 같은 객체 생성
         RequestQueue requestQueue= Volley.newRequestQueue(this);
         requestQueue.add(smpr);
 
