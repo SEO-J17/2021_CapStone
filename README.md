@@ -62,3 +62,13 @@
 <br>
 
 # 4. 기능 소개
+### 1. 웹 서버(APM)를 통한 회원가입 및 로그인 기능 
+
++ 웹 서버 구축(Apache, PHP, MYSQL)
+    <table>
+<tr>
+<td><img src=https://user-images.githubusercontent.com/59912150/178695516-83c19252-8372-4574-a801-d359fad5a694.png></td>
+<td><img src=https://user-images.githubusercontent.com/59912150/178695474-61f0d0e6-aba5-44bc-b5dd-d49975603fee.png></td>
+<td><img src=https://user-images.githubusercontent.com/59912150/178695494-19a21095-3441-444d-aa65-277fc2d3c4e5.png></td>
+</tr>
+</table>
