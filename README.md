@@ -147,7 +147,227 @@
 </table>
 
 + 순서대로 게시판 리스트를 불러오는 코드, 게시글 작성 php 코드를 나타낸 사진이다.
-+ 
 
+### 2. 데이터베이스 구조
+<tr>
+<td><img src=https://user-images.githubusercontent.com/59912150/178753574-b75e6738-94aa-4e23-a178-ee64ce968b03.png></td>
+<td><img src=https://user-images.githubusercontent.com/59912150/178753585-cd08e364-a6d9-4dfd-827a-57780aa0279b.png></td>
+</tr>
+</table>
+
++ 각각 게시판 테이블, 유저 테이블을 나타낸 그림이다.
+<br>
+<br>
+
+### 3. 회원가입 및 로그인 소스코드
+
+```java
+private void login(final String id, final String pw) {
+        final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setCancelable(false);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setTitle("로그인중 입니다.");
+        progressDialog.show();
+         String url = "http://211.232.201.35/login.php";
+          SimpleMultiPartRequest smpr= new SimpleMultiPartRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        @Override
+            public void onResponse(String response) {
+                if (response.equals("Login Success")) {
+                    name = id;
+                    progressDialog.dismiss();
+                    Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    if (loginstate.isChecked()) {
+                        editor.putString(getResources().getString(R.string.prefLoginstate), "loggedin");
+                    } else {
+                        editor.putString(getResources().getString(R.string.prefLoginstate), "loggedout");
+                    }
+                    editor.apply();
+                    Intent intent = new Intent(MainActivity.this, Choice_Activity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    progressDialog.dismiss();
+                    Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Toast.makeText(MainActivity.this, "ERROR", Toast.LENGTH_SHORT).show();
+        }
+    });
+
+        smpr.addStringParam("id", id);
+        smpr.addStringParam("password", pw);
+        RequestQueue requestQueue= Volley.newRequestQueue(this);
+        requestQueue.add(smpr);
+    }
+```
++ 사용자가 입력한 id와 pw를 서버에 요청하여 로그인을 하는 코드 부분이다.
+
+
+```java
+ String url = "http://211.232.201.35/register.php";     //서버 IP주소
+        SimpleMultiPartRequest smpr= new SimpleMultiPartRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.equals("Successfully Registered")) {
+                    Toast.makeText(Join_Activity.this, "회원가입을 완료했습니다.", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(Join_Activity.this, MainActivity.class));
+                    finish();
+                } else {
+                    Toast.makeText(Join_Activity.this, response, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Join_Activity.this, "ERROR", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        smpr.addStringParam("nickname", Alias);
+        smpr.addStringParam("id", ID);
+        smpr.addStringParam("password", PW);
+
+        RequestQueue requestQueue= Volley.newRequestQueue(this);
+        requestQueue.add(smpr);
+```
++ 서버에 회원가입을 하는 닉네임,아이디,비밀번호를 서버에 요청하여 회원가입을 진행한다.
++ 이때 닉네임,아이디 중복체크는 웹 서버에서 진행하여 회원가입 성공여부는 response를 통해 알려준다.
++ 웹 서버와 통신하기위해 [volley plus](https://github.com/DWorkS/VolleyPlus) 라이브러리를 이용해 웹서버와 통신했다.
+
+
+### 4. 이미지 등록 소스코드
+```java
+  gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, 101);
+            }
+        });
+
+        @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 101) {
+            if (resultCode == RESULT_OK) {
+                //사진의 경로 객체 얻어오기
+                Uri fileUri = data.getData();
+                if(fileUri != null){
+                    imgview.setImageURI(fileUri);
+                    imgpath = getImgPath(fileUri);
+                    new AlertDialog.Builder(this).setMessage(fileUri.toString()+"\n"+imgpath).create().show();
+                }else{
+                    Toast.makeText(getApplicationContext(), "사진을 선택하지 않았습니다!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
+    //uri를 절대경로로 바꿔서 알려주는 메소드
+    private String getImgPath(Uri fileUri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        CursorLoader loader = new CursorLoader(this, fileUri, proj, null, null,null);
+        Cursor cursor = loader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String realpath = cursor.getString(column_index);
+        cursor.close();
+        return realpath;
+    }
+```
++ 게시글을 쓸 때 사진을 넣어서 등록할 경우 사진을 등록하는 코드이다.
++ DB의 성능을 위해서 사진 파일은 웹서버에 직접 저장하고 DB에는 사진의 경로만을 저장한다.
++ 스마트폰의 갤러리에 있는 사진의 경로 데이터를 얻어오고, getImgPath라는 메소드를 통해서 절대경로로 바꿔줘서 서버에 보낼 큐에 저장한다. 
+
+```java
+ private void RegisterContent(String title, String content, String writer) {
+        String url = "http://211.232.201.35/board.php";
+        SimpleMultiPartRequest smpr= new SimpleMultiPartRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                new AlertDialog.Builder(Write_Activity.this).setMessage("응답:"+response).create().show();
+                finish();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Write_Activity.this, "ERROR", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //요청 객체에 보낼 데이터를 추가
+        smpr.addStringParam("writer", writer);
+        smpr.addStringParam("title", title);
+        smpr.addStringParam("content", content);
+        //이미지 파일 추가
+        smpr.addFile("img_path", imgpath);
+        RequestQueue requestQueue= Volley.newRequestQueue(this);
+        requestQueue.add(smpr);
+
+    }
+```
++ 사진의 경로와 파일, 작성자, 글 제목, 글 내용을 서버에 요청하여 DB에 반영되도록 한다.
+
+```java
+        Glide.with(this).load(intent.getExtras().getString("img_path")).into(board_img_view);
+
+```
++ 그 후에 게시판에서 보일때는 Glide 라이브러리를 통해서 이미지 경로를 가져와 이미지를 나타낸다.
+
+<br>
+<br>
+
+### 5. 어종인식 소스코드
+
+```java
+static {
+        System.loadLibrary("opencv_java3");
+    }
+```
++ openCV 라이브러리를 설치하고 인식하고자 하는 클래스에 load해준다.
+
+<table>
+<tr>
+<td><img src=https://user-images.githubusercontent.com/59912150/178759197-a2c3d127-56e6-4820-8a2b-666aa9918fdd.png
+></td>
+</tr>
+</table>
+
++ 학습된 딥러닝 모델을 assets폴더에 넣어서 해당모델을 이용해 어종 인식을 진행한다.
+
+```java
+public void YOLO(View Button){
+        if (startYolo == false){
+            startYolo = true;
+            if (firstTimeYolo == false){
+                firstTimeYolo = true;
+                String tinyYoloCfg = getPath("yolov3-tiny.cfg", this) ;
+                String tinyYoloWeights = getPath("yolov3-tiny_final.weights", this) ;
+                tinyYolo = Dnn.readNetFromDarknet(tinyYoloCfg, tinyYoloWeights);
+            }
+        }
+        else{
+            startYolo = false;
+        }
+    }
+```
++ DETECT 버튼을 누르게 되면 실행되는 메소드로, assets 폴더에 넣어둔 모델을 이용하여 인식을 시작한다.
++ 어종인식 코드 부분은 [여기](https://github.com/ivangrov/Android-Deep-Learning-with-OpenCV)를 참고하였다.
++ 코드가 많으므로 전체 코드는 [여기](https://github.com/SEO-J17/2021_Capstone/blob/master/app/src/main/java/jeongbuk/galaxys3/fishfinder/Camera_Activity.java)에서 볼 수 있다.
+
+<br>
+<br>
 
 # 6. 시연 영상
+<table>
+<tr>
+<td><img width = 50% img src=
+"https://user-images.githubusercontent.com/59912150/178760857-43368fec-bb7e-4f12-88c7-6574daac85a5.gif"
+></td>
+</tr>
+</table>
