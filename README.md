@@ -93,6 +93,8 @@
 + 성공적으로 회원가입이 완료되면 토스트 메시지와 함께 로그인 화면으로 이동하게 된다.
 + 자동 로그인은 SharedPreference를 이용하여 기능을 구현했다.
 
+<br>
+<br>
 
 ### 2. 게시판을 통한 글쓰기 기능 
 
@@ -112,6 +114,9 @@
 + 글을 쓸수 있는 화면에서는 갤러리 버튼을 눌러서 사진을 추가할 수도 있다.
 + 글을 쓰는 화면에서 사진을 추가하게 되면 미리보기 사진이 뜨게 하였다.
 
+<br>
+<br>
+
 ### 3. 어종 인식 기능
 
 <table>
@@ -125,6 +130,8 @@
 + DETECT 버튼을 누르게되면 탐지가 시작이 되며, 실시간으로 탐지가 시작이 된다.
 + 탐지가 시작이되면 물고기 사진에 주위에 테두리 박스가 생기면서 물고기의 이름을 나타내며 몇%의 정확도를 가졌는지 나타낸다.
 
+<br>
+<br>
 
 # 5. 주요 소스코드
 ### 1. 웹 서버 주요 소스코드
@@ -148,6 +155,9 @@
 
 + 순서대로 게시판 리스트를 불러오는 코드, 게시글 작성 php 코드를 나타낸 사진이다.
 
+<br>
+<br>
+
 ### 2. 데이터베이스 구조
 <tr>
 <td><img src=https://user-images.githubusercontent.com/59912150/178753574-b75e6738-94aa-4e23-a178-ee64ce968b03.png></td>
@@ -156,6 +166,7 @@
 </table>
 
 + 각각 게시판 테이블, 유저 테이블을 나타낸 그림이다.
+
 <br>
 <br>
 
@@ -206,6 +217,8 @@ private void login(final String id, final String pw) {
 ```
 + 사용자가 입력한 id와 pw를 서버에 요청하여 로그인을 하는 코드 부분이다.
 
+<br>
+<br>
 
 ```java
  String url = "http://211.232.201.35/register.php";     //서버 IP주소
@@ -238,6 +251,8 @@ private void login(final String id, final String pw) {
 + 이때 닉네임,아이디 중복체크는 웹 서버에서 진행하여 회원가입 성공여부는 response를 통해 알려준다.
 + 웹 서버와 통신하기위해 [volley plus](https://github.com/DWorkS/VolleyPlus) 라이브러리를 이용해 웹서버와 통신했다.
 
+<br>
+<br>
 
 ### 4. 이미지 등록 소스코드
 ```java
@@ -282,7 +297,10 @@ private void login(final String id, final String pw) {
 ```
 + 게시글을 쓸 때 사진을 넣어서 등록할 경우 사진을 등록하는 코드이다.
 + DB의 성능을 위해서 사진 파일은 웹서버에 직접 저장하고 DB에는 사진의 경로만을 저장한다.
-+ 스마트폰의 갤러리에 있는 사진의 경로 데이터를 얻어오고, getImgPath라는 메소드를 통해서 절대경로로 바꿔줘서 서버에 보낼 큐에 저장한다. 
++ 스마트폰의 갤러리에 있는 사진의 경로 데이터를 얻어오고, getImgPath라는 메소드를 통해서 절대경로로 바꿔줘서 서버에 보낼 큐에 저장한다.
+
+<br>
+<br>
 
 ```java
  private void RegisterContent(String title, String content, String writer) {
