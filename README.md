@@ -364,10 +364,4 @@ public void YOLO(View Button){
 <br>
 
 # 6. 시연 영상
-<table>
-<tr>
-<td><img width = 50% img src=
-"https://user-images.githubusercontent.com/59912150/178760857-43368fec-bb7e-4f12-88c7-6574daac85a5.gif"
-></td>
-</tr>
-</table>
++ 약 1분 30초 시연 영상은 [링크](https://youtu.be/P_gQI2dfQjw)에서 볼 수 있다.
