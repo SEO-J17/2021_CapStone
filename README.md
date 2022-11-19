@@ -54,6 +54,8 @@
 + 안드로이드
     + Java
     + OpenCV 3.x
+    + Glide
+    + Volley+
 + 딥 러닝
     + YOLO v3
     + Python
